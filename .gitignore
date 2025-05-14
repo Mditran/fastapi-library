@@ -1,0 +1,39 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environment
+venv/
+ENV/
+env/
+.venv/
+
+# Environment variables
+.env
+
+# SQLite database
+*.sqlite3
+*.db
+
+# Pytest cache
+.pytest_cache/
+.cache/
+
+# VS Code config
+.vscode/
+
+# Mypy / coverage / test reports
+.mypy_cache/
+coverage.xml
+htmlcov/
+
+# Logs
+*.log
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Pydantic compiled
+*.pyd
