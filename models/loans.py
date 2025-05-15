@@ -8,4 +8,4 @@ class Loan(Base):
     user_id = Column(Integer, unique=True, nullable=False)
     book_id = Column(Integer, unique=True, nullable=False)
     loan_date = Column(DateTime, nullable=False, server_default=text('CURRENT_TIMESTAMP'))
-    return_date = Column(DateTime, nullable=False, server_default=text("CURRENT_TIMESTAMP + interval '3 months'"))
+    return_date = Column(DateTime, nullable=False)
