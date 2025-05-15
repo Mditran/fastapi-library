@@ -6,12 +6,13 @@ from models.users import User as UserModel
 from ..utils import verify
 from ..oauth2 import create_access_token
 from fastapi.security.oauth2 import OAuth2PasswordRequestForm
+from schemas.token import Token
 
 router = APIRouter(
     tags=['Authentication']
 )
 
-@router.post('/login')
+@router.post('/login', response_model=Token)
 def login(user_credentials: OAuth2PasswordRequestForm = Depends() ,db: Session = Depends(get_db)):
     user = db.query(UserModel).filter(UserModel.email == user_credentials.username).first()
     if not user:

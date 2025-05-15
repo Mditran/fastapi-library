@@ -14,3 +14,4 @@ class User(Base):
     password_hash = Column(String, nullable=False)
 
     roles = relationship("Role", secondary=User_Roles, back_populates="users")
+    loans = relationship("Loan", back_populates="user")

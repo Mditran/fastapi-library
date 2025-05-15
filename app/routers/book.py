@@ -4,7 +4,7 @@ from schemas.book import BookCreate, BookResponse
 from sqlalchemy.orm import Session
 from typing import Optional, List
 from ..database import get_db
-from ..oauth2 import get_current_user, require_roles
+from ..oauth2 import require_roles
 from schemas.token import TokenData
 
 
@@ -15,7 +15,7 @@ router = APIRouter(
 
 
 @router.post("/", status_code=status.HTTP_201_CREATED, response_model=BookResponse)
-def create_book(book: BookCreate, db: Session = Depends(get_db), current_user: TokenData = Depends(require_roles(["ROLE_MODERATOR"]))):
+def create_book(book: BookCreate, db: Session = Depends(get_db), current_user: TokenData = Depends(require_roles(["ROLE_ADMIN","ROLE_MODERATOR"]))):
     db_book = BookModel(**book.model_dump())
     db.add(db_book)
     db.commit()
