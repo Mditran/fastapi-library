@@ -26,9 +26,10 @@ def create_loan(
 @router.get("/", response_model=UserLoansResponse)
 def get_user_loans(
     db: Session = Depends(get_db),
-    current_user: TokenData = Depends(require_roles(["ROLE_USER"]))
+    current_user: TokenData = Depends(require_roles(["ROLE_USER"])),
+    returned: bool = False
 ):
-    return get_user_loans_service(db, current_user)
+    return get_user_loans_service(db, current_user, returned)
 
 @router.post("/{loan_id}/return", status_code=status.HTTP_200_OK)
 def return_book(

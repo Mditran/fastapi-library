@@ -1,6 +1,7 @@
 from sqlalchemy.orm import Session
 from fastapi import HTTPException, status
 from datetime import datetime, timedelta, timezone
+from typing import Optional
 
 from ..models.books import Book as BookModel
 from ..models.loans import Loan as LoanModel
@@ -49,15 +50,23 @@ def create_loan_service(db: Session, loan: LoanCreate, current_user: TokenData) 
     )
 
 
-def get_user_loans_service(db: Session, current_user: TokenData) -> UserLoansResponse:
+def get_user_loans_service(db: Session, current_user: TokenData, returned: bool) -> UserLoansResponse:
     user = db.query(UserModel).filter(UserModel.id == current_user.id).first()
-    loans = db.query(LoanModel).filter(
-        LoanModel.user_id == current_user.id,
-        LoanModel.return_date > datetime.now(timezone.utc)
-    ).all()
+    now = datetime.now(timezone.utc)
+
+    if returned:
+        loans = db.query(LoanModel).filter(
+            LoanModel.user_id == current_user.id,
+            LoanModel.return_date <= now
+        ).all()
+    else:
+        loans = db.query(LoanModel).filter(
+            LoanModel.user_id == current_user.id,
+            LoanModel.return_date > now
+        ).all()
 
     if not loans:
-        raise HTTPException(status_code=404, detail="User has no active loans")
+        raise HTTPException(status_code=404, detail="User has no matching loans")
 
     return UserLoansResponse(
         user_name=user.name,
@@ -78,10 +87,12 @@ def return_book_service(db: Session, loan_id: int, current_user: TokenData):
     if loan is None:
         raise HTTPException(status_code=404, detail="Loan not found")
 
-    if loan.user_id != current_user.id:
+    aware_returned_date = loan.return_date.replace(tzinfo=timezone.utc)
+
+    if loan.user_id != int(current_user.id):
         raise HTTPException(status_code=403, detail="You are not authorized to return this loan")
 
-    if loan.return_date <= datetime.now(timezone.utc):
+    if aware_returned_date <= datetime.now(timezone.utc):
         raise HTTPException(status_code=400, detail="This book has already been returned")
 
     loan.return_date = datetime.now(timezone.utc)

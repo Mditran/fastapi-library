@@ -22,7 +22,7 @@ def create_book(
     return create_book_service(book, db)
 
 
-@router.get("/", response_model=List[BookResponse])
+@router.get("/available", response_model=List[BookResponse])
 def get_books(
     db: Session = Depends(get_db),
     current_user: TokenData = Depends(require_roles(["ROLE_ADMIN", "ROLE_MODERATOR", "ROLE_USER"]))
