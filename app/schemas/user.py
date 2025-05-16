@@ -1,4 +1,4 @@
-from pydantic import BaseModel, EmailStr
+from pydantic import BaseModel, EmailStr, Field
 from typing import Optional, List
 from .role import RoleResponse
 
@@ -8,7 +8,7 @@ class UserCreate(BaseModel):
     name: str
     email: EmailStr
     password_hash: str
-    roles: List[str]
+
 
 # Response
 class UserResponse(BaseModel):

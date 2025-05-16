@@ -3,14 +3,15 @@ import jwt
 from jwt.exceptions import InvalidTokenError
 from fastapi import status, HTTPException, Depends
 from fastapi.security import OAuth2PasswordBearer
+from .Settings import settings
 
-from schemas.token import TokenData
+from .schemas.token import TokenData
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
-SECRET_KEY = "09d25e094faa6ca2556c818166b7a9563b93f7099f6f0f4caa6cf63b88e8d3e7"
-ALGORITHM = "HS256"
-ACCESS_TOKEN_EXPIRE_MINUTES = 30
+SECRET_KEY = f"{settings.secret_key}"
+ALGORITHM = f"{settings.algorithm}"
+ACCESS_TOKEN_EXPIRE_MINUTES = settings.access_token_expire_minutes
 
 def create_access_token(data: dict):
     to_encode = data.copy()
