@@ -13,7 +13,7 @@ from ..schemas.token import TokenData
 def create_loan_service(db: Session, loan: LoanCreate, current_user: TokenData) -> LoanResponse:
     book = db.query(BookModel).filter(BookModel.id == loan.book_id).first()
     if book is None:
-        raise HTTPException(status_code=404, detail=f"Book with id: {loan.book_id} was not found")
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Book with id: {loan.book_id} was not found")
 
     existing_loan = db.query(LoanModel).filter(
         LoanModel.user_id == current_user.id,
@@ -21,10 +21,10 @@ def create_loan_service(db: Session, loan: LoanCreate, current_user: TokenData) 
         LoanModel.return_date > datetime.now(timezone.utc)
     ).first()
     if existing_loan:
-        raise HTTPException(status_code=400, detail="You already have an active loan for this book")
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="You already have an active loan for this book")
 
     if book.copies_available < 1:
-        raise HTTPException(status_code=400, detail="No copies available for this book")
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="No copies available for this book")
 
     loan_date = datetime.now(timezone.utc)
     return_date = loan_date + timedelta(days=90)
@@ -42,7 +42,7 @@ def create_loan_service(db: Session, loan: LoanCreate, current_user: TokenData) 
 
     return LoanResponse(
         book_id=db_loan.book_id,
-        loan_id=db_loan.loan_id,
+        loan_id=db_loan.id,
         user_name=db_loan.user.name,
         book_title=db_loan.book.title,
         loan_date=db_loan.loan_date,
@@ -66,7 +66,7 @@ def get_user_loans_service(db: Session, current_user: TokenData, returned: bool)
         ).all()
 
     if not loans:
-        raise HTTPException(status_code=404, detail="User has no matching loans")
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="User has no matching loans")
 
     return UserLoansResponse(
         user_name=user.name,
@@ -84,16 +84,14 @@ def get_user_loans_service(db: Session, current_user: TokenData, returned: bool)
 
 def return_book_service(db: Session, loan_id: int, current_user: TokenData):
     loan = db.query(LoanModel).filter(LoanModel.id == loan_id).first()
-    if loan is None:
-        raise HTTPException(status_code=404, detail="Loan not found")
+
+    if loan is None or loan.user_id != int(current_user.id):
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Loan not found")
 
     aware_returned_date = loan.return_date.replace(tzinfo=timezone.utc)
 
-    if loan.user_id != int(current_user.id):
-        raise HTTPException(status_code=403, detail="You are not authorized to return this loan")
-
     if aware_returned_date <= datetime.now(timezone.utc):
-        raise HTTPException(status_code=400, detail="This book has already been returned")
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="This book has already been returned")
 
     loan.return_date = datetime.now(timezone.utc)
 

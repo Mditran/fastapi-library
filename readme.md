@@ -130,3 +130,96 @@ SECRET_KEY=your_secret_key
 ALGORITHM=HS256
 ACCESS_TOKEN_EXPIRE_MINUTES=30
 ```
+
+## Docker (Optional)
+### ✅ Prerequisites
+
+Before building and running the container, make sure you have the following:
+
+- [Docker Desktop](https://www.docker.com/products/docker-desktop/) (with support for Linux containers)
+- Internet connection (to download the base image and dependencies)
+- Docker Hub open and signed in (optional, only if you want to push the image)
+
+---
+
+### 🐳 Build the Docker Image
+
+1. Open your terminal or CMD and navigate to the root folder of the project where the `Dockerfile` is located.
+
+2. Run the following command to build the Docker image:
+
+```bash
+docker build -t library-api .
+```
+
+#### This command will:
+
+- Use python:3.13.3 as the base image.
+
+- Copy the requirements.txt and install all dependencies.
+
+- Copy the rest of the project files.
+
+- Launch the app with uvicorn on port 8000.
+
+
+### ▶️ Run the Docker Container
+
+Once the image is built, you can run the container using:
+
+```bash
+docker run -d -p 8000:8000 library-api
+```
+
+####This command:
+
+- Runs the container in detached mode (-d).
+
+- Maps port 8000 from the container to port 8000 on your machine.
+
+### 🌐 Access the API
+
+Open your browser and visit:
+
+- [Project](http://localhost:8000)
+- [Swagger documentation](http://localhost:8000/docs)
+- [Redoc documentation](http://localhost:8000/redoc)
+
+
+## 📫 Postman Collections
+To manually test the API, you can use Postman.
+
+### 🧰 Step-by-step:
+Install Postman
+- [Download Postman](https://www.postman.com/downloads/)
+
+Import the following files into Postman:
+- Library API.postman_collection.json
+
+- Library API.postman_environment.json
+
+In Postman, select the environment "Library API" from the top-right dropdown.
+
+### ⚠️ If using Docker
+
+By default, the Postman environment is set to use:
+
+```bash
+http://127.0.0.1:8000
+```
+
+If you're running the project using Docker, you must change the environment variable URL to:
+
+```bash
+http://localhost:8000
+```
+
+### To update this in Postman:
+
+1. Open the "Library API" environment.
+
+2. Locate the URL variable.
+
+3. Replace http://127.0.0.1:8000 with http://localhost:8000.
+
+4. Save the environment and run your requests again.

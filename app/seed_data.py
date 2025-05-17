@@ -47,7 +47,7 @@ def seed():
             {"title": "Don Quijote de la Mancha", "author": "Miguel de Cervantes", "copies_available": 3},
             {"title": "1984", "author": "George Orwell", "copies_available": 7},
             {"title": "El Principito", "author": "Antoine de Saint-Exupéry", "copies_available": 10},
-            {"title": "La Odisea", "author": "Homero", "copies_available": 4},
+            {"title": "La Odisea", "author": "Homero", "copies_available": 0},
             {"title": "Hamlet", "author": "William Shakespeare", "copies_available": 6},
             {"title": "Orgullo y Prejuicio", "author": "Jane Austen", "copies_available": 8},
             {"title": "El Gran Gatsby", "author": "F. Scott Fitzgerald", "copies_available": 5},

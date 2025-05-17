@@ -1,0 +1,816 @@
+{
+	"info": {
+		"_postman_id": "91dec303-3d3d-4885-9ed4-ef8eb5f3c69d",
+		"name": "Library API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "43025938"
+	},
+	"item": [
+		{
+			"name": "1. Create User - Invalid Email",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\": \"Invalid\",\r\n  \"email\": \"not-an-email\",\r\n  \"password_hash\": \"123\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}register",
+					"host": [
+						"{{URL}}register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "2. Create User 1 - Valid",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\": \"Andres\",\r\n  \"email\": \"Andres0123@gmail.com\",\r\n  \"password_hash\": \"Hola mundo\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}register",
+					"host": [
+						"{{URL}}register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "3. Create User 2 - Valid",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\": \"Maria\",\r\n  \"email\": \"maria.luna@example.com\",\r\n  \"password_hash\": \"SecretPass123\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}register",
+					"host": [
+						"{{URL}}register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "4. Create User 3 - Valid",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\": \"Carlos\",\r\n  \"email\": \"carlos.dev@example.com\",\r\n  \"password_hash\": \"MyPassword456\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}register",
+					"host": [
+						"{{URL}}register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "5. Create User - Duplicate Email",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\": \"Duplicate\",\r\n  \"email\": \"Andres0123@gmail.com\",\r\n  \"password_hash\": \"AnotherPass789\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}register",
+					"host": [
+						"{{URL}}register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "6. Login Admin",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.environment.set(\"JWT\", pm.response.json().access_token)"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "username",
+							"value": "admin@example.com",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "admin123",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{URL}}login",
+					"host": [
+						"{{URL}}login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "7. Login Mod",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.environment.set(\"JWT\", pm.response.json().access_token)"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "username",
+							"value": "moderator@example.com",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "mod123",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{URL}}login",
+					"host": [
+						"{{URL}}login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "8.1. Login User 2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.environment.set(\"JWT\", pm.response.json().access_token)"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "username",
+							"value": "maria.luna@example.com",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "SecretPass123",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{URL}}login",
+					"host": [
+						"{{URL}}login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "8.2. Login User 3",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.environment.set(\"JWT\", pm.response.json().access_token)"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "username",
+							"value": "carlos.dev@example.com",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "MyPassword456",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{URL}}login",
+					"host": [
+						"{{URL}}login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "9. Login User - Incorrect Credentials",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.environment.set(\"JWT\", pm.response.json().access_token)"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "username",
+							"value": "maria.luna@example.com",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "Secretass123",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{URL}}login",
+					"host": [
+						"{{URL}}login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "10. Create Book - Valid Book A",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{JWT}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"title\": \"Sapiens\",\r\n  \"author\": \"Yuval Noah Harari\",\r\n  \"copies_available\": 6\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}books",
+					"host": [
+						"{{URL}}books"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "11. Create Book - Valid Book B",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{JWT}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"title\": \"El Nombre del Viento\",\r\n  \"author\": \"Patrick Rothfuss\",\r\n  \"copies_available\": 4\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}books",
+					"host": [
+						"{{URL}}books"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "12. Create Book - Duplicate Title",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{JWT}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"title\": \"La Divina Comedia\",\r\n  \"author\": \"Dante Alighieri\",\r\n  \"copies_available\": 6\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}books",
+					"host": [
+						"{{URL}}books"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "13. Create Book - Missing Fields",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{JWT}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\": \"Invisible Book\"\r\n}\r\n\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}books",
+					"host": [
+						"{{URL}}books"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "14. List Available Books",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{JWT}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{URL}}books/available",
+					"host": [
+						"{{URL}}books"
+					],
+					"path": [
+						"available"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "15. Create Loan",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{JWT}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"book_id\": 2\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}loans",
+					"host": [
+						"{{URL}}loans"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "16. Create Loan with Non-Existent Book ID",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{JWT}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"book_id\": 763\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}loans",
+					"host": [
+						"{{URL}}loans"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "17. Create Loan with Invalid ID Format",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{JWT}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"book_id\": \"El principito\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}loans",
+					"host": [
+						"{{URL}}loans"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "18. Create Loan with Book Currently Loaned Out",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{JWT}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"book_id\": 2\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}loans",
+					"host": [
+						"{{URL}}loans"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "19. Create Loan with No Copies Available",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{JWT}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"book_id\": 5\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}loans",
+					"host": [
+						"{{URL}}loans"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "20. List Loans",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{JWT}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}loans",
+					"host": [
+						"{{URL}}loans"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "21. List Loans with Query",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{JWT}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}loans?returned=true",
+					"host": [
+						"{{URL}}loans"
+					],
+					"query": [
+						{
+							"key": "returned",
+							"value": "true"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "22. Return Loan - Valid Loan ID",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{JWT}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{URL}}loans/1/return",
+					"host": [
+						"{{URL}}loans"
+					],
+					"path": [
+						"1",
+						"return"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "23. Return Loan - Invalid Loan ID",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{JWT}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{URL}}loans/212/return",
+					"host": [
+						"{{URL}}loans"
+					],
+					"path": [
+						"212",
+						"return"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "24. Return Loan - Unauthorized Loan ID",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{JWT}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{URL}}loans/3/return",
+					"host": [
+						"{{URL}}loans"
+					],
+					"path": [
+						"3",
+						"return"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

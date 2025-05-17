@@ -18,7 +18,7 @@ def create_user(db: Session, user_data: dict) -> UserModel:
     # Buscar rol por defecto
     role_user = db.query(RoleModel).filter(RoleModel.name == "ROLE_USER").first()
     if not role_user:
-        raise HTTPException(status_code=500, detail="Default role ROLE_USER not found")
+        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Default role ROLE_USER not found")
 
     # Hashear contraseña
     password_hash = get_password_hash(user_data.pop('password_hash'))
