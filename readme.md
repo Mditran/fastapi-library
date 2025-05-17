@@ -59,7 +59,15 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
-### 5. 🧱 Run the application
+### 5. 🔐 Create the `.env` File
+Before running the application, create a `.env` file in the root folder with the following content:
+```bash
+SECRET_KEY=your_secret_key
+ALGORITHM=HS256
+ACCESS_TOKEN_EXPIRE_MINUTES=30
+```
+
+### 6. 🧱 Run the application
 ```bash
 uvicorn app.main:app --reload
 ```
@@ -82,10 +90,13 @@ Make sure Base.metadata.create_all() is called in main.py.
 ```text
 📁library-api/
 │
-├── .env                     # Environment variables (e.g., DB URL, secrets)
-├── .gitignore               # Files and folders to be ignored by Git
-├── requirements.txt         # List of Python packages required to run the project
-├── README.md                # Project documentation
+├── .env                                   # Environment variables (e.g., DB URL, secrets)
+├── .gitignore                             # Files and folders to be ignored by Git
+├── requirements.txt                       # List of Python packages required to run the project
+├── README.md                              # Project documentation
+├── Dockerfile                             # Docker build instructions to run the API in a container
+├── Library API.postman_collection         # Postman request collection to test all API endpoints
+├── Library API.postman_environment.json   # Postman environment with variables (URL, JWT)
 │
 ├── 📁app/                     # Main application code
 │
@@ -121,14 +132,6 @@ Make sure Base.metadata.create_all() is called in main.py.
 │   │   ├── loan.py
 │   │   └── user.py
 
-```
-
-### 🔐 Environment Variables
-Create a .env file in the root folder:
-```bash
-SECRET_KEY=your_secret_key
-ALGORITHM=HS256
-ACCESS_TOKEN_EXPIRE_MINUTES=30
 ```
 
 ## Docker (Optional)
@@ -171,7 +174,7 @@ Once the image is built, you can run the container using:
 docker run -d -p 8000:8000 library-api
 ```
 
-####This command:
+#### This command:
 
 - Runs the container in detached mode (-d).
 
@@ -208,18 +211,25 @@ By default, the Postman environment is set to use:
 http://127.0.0.1:8000
 ```
 
-If you're running the project using Docker, you must change the environment variable URL to:
+If you're running the project using Docker, you must update the URL environment variable to match the port you've exposed.
 
 ```bash
-http://localhost:8000
+docker run -d -p 8000:8000 library-api  # → URL = http://localhost:8000
+docker run -d -p 5000:8000 library-api  # → URL = http://localhost:5000
+
 ```
 
-### To update this in Postman:
+### 🔧 To update the environment in Postman:
 
 1. Open the "Library API" environment.
 
 2. Locate the URL variable.
 
-3. Replace http://127.0.0.1:8000 with http://localhost:8000.
+3. Replace the current value with your correct URL and port (e.g. http://localhost:5000).
 
-4. Save the environment and run your requests again.
+4. Save the environment 
+
+5. Re-run your requests.
+
+6. Once updated, you can start making requests to the API using the correct base URL.
+
